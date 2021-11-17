@@ -292,9 +292,15 @@ ol, ul, dl {
         </form> 
         {% if importerror %}
               <p class="p-large"><strong>Error:</strong> {{ importerror }}
-        {% endif %}
-      </section>     
-      
+        {% endif %}      
+      <form action="" method="post" class="notes__input-wrapper">
+      	  <div class="notes__input-container">
+	     <label for="note">Upload an image:</label>
+		<input class="form-control notes__input__no-margin" type="file" name="imageid">
+	  </div>
+	  <input class="btn-solid-lg notes__input-margin-top" type="submit" name="submit_button" value="add image">
+      </form>
+      </section>
       <!-- Scripts -->
     <script src={{ url_for('static',filename='js/jquery.min.js') }}></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
     <script src={{ url_for('static',filename='js/popper.min.js') }}></script> <!-- Popper tooltip library for Bootstrap -->
