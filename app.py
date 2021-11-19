@@ -62,7 +62,6 @@ def login_required(view):
             session['userid'] = result[0][0]
             session['username'] = result[0][1]
             session['password'] = result[0][2]
-            return redirect(url_for('index'))
 
         if not session.get('logged_in'):
             return redirect(url_for('login'))
