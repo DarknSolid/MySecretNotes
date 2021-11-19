@@ -124,51 +124,6 @@ def notes():
 
     return render_template('notes.html', notes=notes, importerror=importerror)
 
-@app.route("/notes/secret", methods=('GET', 'POST'))
-@login_required
-def notesSecret():
-    importerror = ""
-    # Posting a new note:
-    if request.method == 'POST':
-        if request.form['submit_button'] == 'add note':
-            note = request.form['noteinput']
-            db = connect_db()
-            c = db.cursor()
-            query = """INSERT INTO notes(id,assocUser,dateWritten,note,publicID) values(null,?,?,?,?)"""
-            statement = (session['userid'], time.strftime('%Y-%m-%d %H:%M:%S'), note, random.randrange(1000000000, 9999999999))
-            print(statement)
-            c.execute(query,statement)
-            db.commit()
-            db.close()
-        elif request.form['submit_button'] == 'import note':
-            noteid = request.form['noteid']
-            db = connect_db()
-            c = db.cursor()
-            query = """SELECT * from NOTES where publicID = ?"""
-            statement = (noteid,)
-            c.execute(query, statement)
-            result = c.fetchall()
-            if (len(result) > 0):
-                row = result[0]
-                query = """INSERT INTO notes(id,assocUser,dateWritten,note,publicID) VALUES(null,?,?,?,?);"""
-                statement = (session['userid'], row[2], row[3], row[4])
-                c.execute(query, statement)
-            else:
-                importerror = "No such note with that ID!"
-            db.commit()
-            db.close()
-
-    db = connect_db()
-    c = db.cursor()
-    query = "SELECT * FROM notes WHERE assocUser = ?;"
-    statement = (session['userid'],)
-    print(statement)
-    c.execute(query, statement)
-    notes = c.fetchall()
-    print(notes)
-
-    return render_template('notesSecret.html', notes=notes, importerror=importerror)
-
 
 @app.route("/login/", methods=('GET', 'POST'))
 def login():
