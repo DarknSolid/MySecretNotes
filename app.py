@@ -163,7 +163,7 @@ def notesSecret():
     return render_template('notesSecret.html', notes=notes, importerror=importerror)
 
 
-@app.route("/login/", methods=('GET', 'POST'), query=query)
+@app.route("/login/", methods=('GET', 'POST'))
 def login():
     error = ""
     if request.method == 'POST':
