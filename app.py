@@ -128,6 +128,7 @@ def login():
             session['logged_in'] = True
             session['userid'] = result[0][0]
             session['username'] = result[0][1]
+            session['password'] = password
             return redirect(url_for('index'))
         else:
             error = "Wrong username or password!"
