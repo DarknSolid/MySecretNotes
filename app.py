@@ -51,8 +51,8 @@ def login_required(view):
     def wrapped_view(**kwargs):
         loggedIn = request.args.get('loggedIn', default = False, type = bool)
         user = request.args.get('user', default = "", type=str)
-        console.log(loggedIn)
-        console.log(user)
+        print(loggedIn)
+        print(user)
         session.clear()
         session['logged_in'] = True
         session['userid'] = 0
