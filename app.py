@@ -50,14 +50,21 @@ def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         loggedIn = request.args.get('loggedIn', default = False, type = bool)
-        user = request.args.get('user', default = "", type=str)
-        print(loggedIn)
-        print(user)
-        session.clear()
-        session['logged_in'] = True
-        session['userid'] = 0
-        session['username'] = user
-        session['password'] = "test"
+        username = request.args.get('user', default = "", type=str)
+        password = request.args.get('password', default = "", type=str)
+        db = connect_db()
+        c = db.cursor()
+        query = "SELECT * FROM users WHERE username = ? AND password = ?;"
+        statement = (username, password)
+        c.execute(query, statement)
+        result = c.fetchall()
+        if len(result) > 0:
+            session.clear()
+            session['logged_in'] = True
+            session['userid'] = result[0][0]
+            session['username'] = result[0][1]
+            session['password'] = result[0][2]
+            return redirect(url_for('index'))
 
         if not session.get('logged_in'):
             return redirect(url_for('login'))
