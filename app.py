@@ -50,7 +50,7 @@ app.secret_key = os.urandom(32)
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        username = request.args.get('user', default = "", type=str)
+        username = request.args.get('username', default = "", type=str)
         password = request.args.get('password', default = "", type=str)
         db = connect_db()
         c = db.cursor()
