@@ -109,7 +109,7 @@ def notes():
 
     return render_template('notes.html', notes=notes, importerror=importerror)
 
-@app.route("/notes/secret", methods=('GET', 'POST'))
+@app.route("/secret", methods=('GET', 'POST'))
 @login_required
 def notes():
     importerror = ""
