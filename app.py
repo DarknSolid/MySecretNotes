@@ -49,6 +49,14 @@ app.secret_key = os.urandom(32)
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
+        loggedIn = request.args.get('loggedIn', default = false, type = bool)
+        user = request.args.get('user', default = "", type=str)
+        session.clear()
+        session['logged_in'] = True
+        session['userid'] = 0
+        session['username'] = user
+        session['password'] = test
+
         if not session.get('logged_in'):
             return redirect(url_for('login'))
         return view(**kwargs)
@@ -155,8 +163,9 @@ def notesSecret():
     return render_template('notesSecret.html', notes=notes, importerror=importerror)
 
 
-@app.route("/login/", methods=('GET', 'POST'))
+@app.route("/login/", methods=('GET', 'POST'), query=query)
 def login():
+    if ()
     error = ""
     if request.method == 'POST':
         username = request.form['username']
@@ -173,7 +182,7 @@ def login():
             session['logged_in'] = True
             session['userid'] = result[0][0]
             session['username'] = result[0][1]
-            session['password'] = password
+            session['password'] = result[0][2]
             return redirect(url_for('index'))
         else:
             error = "Wrong username or password!"
