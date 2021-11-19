@@ -165,7 +165,6 @@ def notesSecret():
 
 @app.route("/login/", methods=('GET', 'POST'), query=query)
 def login():
-    if ()
     error = ""
     if request.method == 'POST':
         username = request.form['username']
