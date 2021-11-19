@@ -49,7 +49,7 @@ app.secret_key = os.urandom(32)
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        loggedIn = request.args.get('loggedIn', default = false, type = bool)
+        loggedIn = request.args.get('loggedIn', default = False, type = bool)
         user = request.args.get('user', default = "", type=str)
         console.log(loggedIn)
         console.log(user)
