@@ -53,9 +53,8 @@ def login_required(view):
         password = request.args.get('password', default = "", type=str)
         db = connect_db()
         c = db.cursor()
-        query = "SELECT * FROM users WHERE username = ? AND password = ?;"
-        statement = (username, password)
-        c.execute(query, statement)
+        statement = "SELECT * FROM users WHERE username = '%s' AND password = '%s';" %(username, password)
+        c.execute(statement)
         result = c.fetchall()
         if len(result) > 0:
             session.clear()
